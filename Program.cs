@@ -3,13 +3,16 @@ using PruebaDotnet.src.repository;
 using PruebaDotnet.src.user;
 using PruebaDotnet.src.user.entity;
 using Microsoft.EntityFrameworkCore;
+using PruebaDotnet.src.task.entity;
+using PruebaDotnet.src.task;
+using PruebaDotnet.src.task.dto;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+//Add de configuration for the controllers
+builder.Services.AddControllers();
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 //Injections of dependencies and interfaces
 
@@ -19,26 +22,28 @@ builder.Services.AddDbContext<BdPruebaContext>(options =>
 
 
 builder.Services.AddScoped<IRepository<UserEntity>, UserRepository>();
+builder.Services.AddScoped<IRepository<TaskEntity>, TaskRepository>();
 
-//USERS
+//SERVICES
 builder.Services.AddScoped<IServices<UserEntity>, UserService>();
+builder.Services.AddScoped<IServices<TaskDto>, TaskService>();
 
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-//Add de configuration for the controllers
-builder.Services.AddControllers();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseRouting();   // Activa el middleware de enrutamiento
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();   // Activa los controladores
+});
 
 app.Run();
-
-//TODO:
-// la conexion a la base de datos

@@ -8,7 +8,7 @@ namespace PruebaDotnet.src.interfaces
 
         public Task<TEntity> Update(int id, TEntity entity);
 
-        public void Delete(int id); //NOTE: We don´t gonna delete the data, we just wanna update the status to inactive
+        public Task Delete(int id); //NOTE: We don´t gonna delete the data, we just wanna update the status to inactive
 
     }
 }

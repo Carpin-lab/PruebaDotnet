@@ -31,18 +31,18 @@ namespace PruebaDotnet.src.repository
         public async Task<UserEntity> Update(int id, UserEntity entity)
         {
             var user = await GetOne(id);
-            user.user = entity.user;
+            user.username = entity.username;
             user.password = entity.password;
             await Save();
             return await GetOne(id);
         }
 
-        public async void Delete(int id)
+        public async Task Delete(int id)
         {
             var user = await GetOne(id);
             user.state = false;
             await Save();
-
+            return;
         }
         public async Task Save() => await _context.SaveChangesAsync();
     }

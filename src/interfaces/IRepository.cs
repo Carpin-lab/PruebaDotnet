@@ -11,7 +11,7 @@ namespace PruebaDotnet.src.interfaces
         Task<TEntity> GetOne(int id);
         Task<TEntity> Add(TEntity entity);
         Task<TEntity> Update(int id, TEntity entity);
-        void Delete(int id);
+        Task Delete(int id);
         Task Save();
     }
 }

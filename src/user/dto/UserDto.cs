@@ -8,7 +8,7 @@ namespace PruebaDotnet.src.user.dto
 {
     public class UserDto
     {
-        public string user { get; set; }
+        public string username { get; set; }
         public string password { get; set; }
     }
 }

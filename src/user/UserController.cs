@@ -12,9 +12,9 @@ namespace PruebaDotnet.src.user
     [Route("api/[controller]")]
     public class UserController : ControllerBase, IControllers<UserEntity>
     {
-        private readonly UserService _userService;
+        private readonly IServices<UserEntity> _userService;
 
-        public UserController(UserService userService)
+        public UserController(IServices<UserEntity> userService)
         {
             _userService = userService;
         }
@@ -31,7 +31,7 @@ namespace PruebaDotnet.src.user
         {
             var User = await _userService.GetById(id);
             if (User == null)
-                NotFound("User not found");
+                return NotFound("User not found");
             return Ok(User);
         }
 
@@ -46,7 +46,11 @@ namespace PruebaDotnet.src.user
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UserEntity entity)
         {
-            await GetById(id);
+            var existingUser = await _userService.GetById(id);
+            if (existingUser == null)
+            {
+                return NotFound("User not found");
+            }
             var UserUpdate = await _userService.Update(id, entity);
             return Ok(UserUpdate);
         }
@@ -55,8 +59,12 @@ namespace PruebaDotnet.src.user
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await GetById(id);
-            _userService.Delete(id);
+            var existingUser = await _userService.GetById(id);
+            if (existingUser == null)
+            {
+                return NotFound("User not found");
+            }
+            await _userService.Delete(id);
             return Ok();
         }
     }

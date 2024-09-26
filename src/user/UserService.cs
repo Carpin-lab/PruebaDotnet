@@ -17,8 +17,9 @@ namespace PruebaDotnet.src.user
         {
             var user = new UserEntity
             {
-                user = entity.user,
+                username = entity.username,
                 password = entity.password,
+                state = true
             };
             await _UserRepository.Add(user);
             return user;
@@ -40,9 +41,10 @@ namespace PruebaDotnet.src.user
             return await _UserRepository.Update(id, entity);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _UserRepository.Delete(id);
+            await _UserRepository.Delete(id);
+            return;
         }
     }
 }

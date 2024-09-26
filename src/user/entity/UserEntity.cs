@@ -13,7 +13,7 @@ namespace PruebaDotnet.src.user.entity
         [Column]
         [Required]
         [MaxLength(50)]
-        public string user { get; set; }
+        public string username { get; set; }
 
         [Column]
         [Required]
@@ -21,7 +21,7 @@ namespace PruebaDotnet.src.user.entity
         public string password { get; set; }
 
         [Column]
-        [DefaultValue(true)]
+        [DefaultValue(1)] //Don´t work :(
         public bool state { get; set; }
 
 
