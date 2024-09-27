@@ -15,9 +15,9 @@ namespace PruebaDotnet.src.user
     [Route("api/[controller]")]
     public class UserController : ControllerBase, IControllers<UserDto>
     {
-        private readonly IServices<UserDto> _userService;
+        private readonly UserService _userService;
 
-        public UserController(IServices<UserDto> userService)
+        public UserController(UserService userService)
         {
             _userService = userService;
         }
@@ -25,8 +25,13 @@ namespace PruebaDotnet.src.user
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] UserDto entity)
         {
+            var validUser = await _userService.GetByUsername(entity.username);
+            if (validUser)
+            {
+                return BadRequest("User already exists, try another username");
+            }
             var newUser = await _userService.Add(entity);
-            return newUser != null ? Ok(newUser) : BadRequest(); //FIXME: We need to return the object created
+            return newUser != null ? Ok(newUser) : BadRequest();
         }
 
         [HttpGet("{id}")]

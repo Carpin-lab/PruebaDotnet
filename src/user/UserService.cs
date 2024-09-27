@@ -1,4 +1,5 @@
 using PruebaDotnet.src.interfaces;
+using PruebaDotnet.src.repository;
 using PruebaDotnet.src.user.dto;
 using PruebaDotnet.src.user.entity;
 
@@ -6,9 +7,9 @@ namespace PruebaDotnet.src.user
 {
     public class UserService : IServices<UserDto>
     {
-        private readonly IRepository<UserEntity> _UserRepository;
+        private readonly UserRepository _UserRepository;
 
-        public UserService(IRepository<UserEntity> userRepository)
+        public UserService(UserRepository userRepository)
         {
             _UserRepository = userRepository;
         }
@@ -30,7 +31,12 @@ namespace PruebaDotnet.src.user
             };
         }
 
-
+        public async Task<Boolean> GetByUsername(string username)
+        {
+            var user = await _UserRepository.GetByUsername(username);
+            if (user != null) return true;
+            return false;
+        }
 
         public async Task<IEnumerable<UserDto>> Get()
         {

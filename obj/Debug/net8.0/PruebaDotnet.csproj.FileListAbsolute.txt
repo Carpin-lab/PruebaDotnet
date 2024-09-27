@@ -280,3 +280,4 @@ C:\Users\carpi\PruebaDotNet_React\PruebaDotnet\obj\Debug\net8.0\refint\PruebaDot
 C:\Users\carpi\PruebaDotNet_React\PruebaDotnet\obj\Debug\net8.0\PruebaDotnet.pdb
 C:\Users\carpi\PruebaDotNet_React\PruebaDotnet\obj\Debug\net8.0\PruebaDotnet.genruntimeconfig.cache
 C:\Users\carpi\PruebaDotNet_React\PruebaDotnet\obj\Debug\net8.0\ref\PruebaDotnet.dll
+C:\Users\carpi\PruebaDotNet_React\PruebaDotnet\obj\Debug\net8.0\PruebaDotnet.sourcelink.json

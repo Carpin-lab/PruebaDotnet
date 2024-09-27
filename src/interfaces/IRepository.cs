@@ -13,5 +13,7 @@ namespace PruebaDotnet.src.interfaces
         Task<TEntity> Update(int id, TEntity entity);
         Task Delete(int id);
         Task Save();
+
+        
     }
 }

@@ -28,12 +28,12 @@ builder.Services.AddDbContext<BdPruebaContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
-builder.Services.AddScoped<IRepository<UserEntity>, UserRepository>();
+builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<IRepository<TaskEntity>, TaskRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 //SERVICES
-builder.Services.AddScoped<IServices<UserDto>, UserService>();
+builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<IServices<TaskDto>, TaskService>();
 builder.Services.AddScoped<IAuthServices, AuthService>();
 

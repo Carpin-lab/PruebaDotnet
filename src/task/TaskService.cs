@@ -33,6 +33,7 @@ namespace PruebaDotnet.src.task
 
             return new TaskDto
             {
+                id = result.id,
                 title = result.title,
                 description = result.description,
                 expiration_date = result.expiration_date,
@@ -64,13 +65,13 @@ namespace PruebaDotnet.src.task
         public async Task<TaskDto> GetById(int id)
         {
             var result = await _TaskRepository.GetOne(id);
-            Console.WriteLine("resultado: " + result);
             if (result == null)
             {
                 return null;
             }
             return new TaskDto
             {
+                id = result.id,
                 user_id = result.user_id,
                 title = result.title,
                 description = result.description,
@@ -92,6 +93,7 @@ namespace PruebaDotnet.src.task
             var result = await _TaskRepository.Update(id, newTask);
             return new TaskDto
             {
+                id = result.id,
                 title = result.title,
                 description = result.description,
                 expiration_date = result.expiration_date,

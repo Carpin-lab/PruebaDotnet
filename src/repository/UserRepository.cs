@@ -27,6 +27,7 @@ namespace PruebaDotnet.src.repository
         public async Task<IEnumerable<UserEntity>> Get() => await _context.Users.Where(u => u.state == true).ToListAsync();
 
         public async Task<UserEntity> GetOne(int id) => await _context.Users.Where(u => u.state == true).FirstOrDefaultAsync(u => u.id == id);
+        public async Task<UserEntity> GetByUsername(string username) => await _context.Users.Where(u => u.state == true).FirstOrDefaultAsync(u => u.username == username);
 
         public async Task<UserEntity> Update(int id, UserEntity entity)
         {
