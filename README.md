@@ -54,4 +54,4 @@ To save this migration in the database use:
 
 ## License
 
-This project is licensed under the PP license by the company Perry el Platitorrinco S.A
+This project is licensed under the PP license by the company of a platypus S.A
