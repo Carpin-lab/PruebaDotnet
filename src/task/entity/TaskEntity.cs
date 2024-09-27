@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using PruebaDotnet.src.user.entity;
 
 namespace PruebaDotnet.src.task.entity
 {
@@ -36,5 +37,14 @@ namespace PruebaDotnet.src.task.entity
             * 2 = pending
             * 3 = finished
             */
+
+
+        //Foreing key
+        [Column]
+        [Required]
+        public int user_id { get; set; }
+
+        [ForeignKey("user_id")]
+        public virtual UserEntity user { get; set; }
     }
 }

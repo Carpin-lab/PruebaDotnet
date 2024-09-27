@@ -23,9 +23,9 @@ namespace PruebaDotnet.src.repository
             return entity;
         }
 
-        public async Task<IEnumerable<TaskEntity>> Get() => await _context.Tasks.Where(u => u.state != 0).ToListAsync(); //TODO: la logica para el estado
+        public async Task<IEnumerable<TaskEntity>> Get() => await _context.Tasks.Where(u => u.state != 0).ToListAsync();
 
-        public async Task<TaskEntity> GetOne(int id) => await _context.Tasks.Where(u => u.state == 1).FirstOrDefaultAsync(u => u.id == id);
+        public async Task<TaskEntity> GetOne(int id) => await _context.Tasks.Where(u => u.state != 0).FirstOrDefaultAsync(u => u.id == id);
 
         public async Task<TaskEntity> Update(int id, TaskEntity entity)
         {

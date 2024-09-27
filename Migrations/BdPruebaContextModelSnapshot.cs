@@ -45,7 +45,12 @@ namespace PruebaDotnet.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("user_id")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
+
+                    b.HasIndex("user_id");
 
                     b.ToTable("Tasks");
                 });
@@ -74,6 +79,22 @@ namespace PruebaDotnet.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("PruebaDotnet.src.task.entity.TaskEntity", b =>
+                {
+                    b.HasOne("PruebaDotnet.src.user.entity.UserEntity", "user")
+                        .WithMany("tasks")
+                        .HasForeignKey("user_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("PruebaDotnet.src.user.entity.UserEntity", b =>
+                {
+                    b.Navigation("tasks");
                 });
 #pragma warning restore 612, 618
         }

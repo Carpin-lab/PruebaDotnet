@@ -6,12 +6,19 @@ using Microsoft.EntityFrameworkCore;
 using PruebaDotnet.src.task.entity;
 using PruebaDotnet.src.task;
 using PruebaDotnet.src.task.dto;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using PruebaDotnet.src.Auth;
+using PruebaDotnet.src.Auth.model;
+using PruebaDotnet.src.user.dto;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 //Add de configuration for the controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddDataAnnotationsLocalization();
 // Add services to the container.
 
 //Injections of dependencies and interfaces
@@ -23,27 +30,66 @@ builder.Services.AddDbContext<BdPruebaContext>(options =>
 
 builder.Services.AddScoped<IRepository<UserEntity>, UserRepository>();
 builder.Services.AddScoped<IRepository<TaskEntity>, TaskRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 //SERVICES
-builder.Services.AddScoped<IServices<UserEntity>, UserService>();
+builder.Services.AddScoped<IServices<UserDto>, UserService>();
 builder.Services.AddScoped<IServices<TaskDto>, TaskService>();
+builder.Services.AddScoped<IAuthServices, AuthService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+// var secret = builder.Configuration["Jwt:Key"];
+var jwt = builder.Configuration.GetSection("jwt").Get<JwtModel>();
+var keyBytes = Encoding.UTF8.GetBytes(jwt.Key);
+
+//Configurations for the authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwt.Key,
+        ValidAudience = jwt.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
+    };
+});
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:3000")
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod(); ;
+                      });
+});
+
 var app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseRouting();   // Activa el middleware de enrutamiento
+app.UseCors(MyAllowSpecificOrigins);
+
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllers();   // Activa los controladores
+    endpoints.MapControllers();
 });
-
 app.Run();

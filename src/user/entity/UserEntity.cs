@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PruebaDotnet.src.task.entity;
 
 namespace PruebaDotnet.src.user.entity
 {
@@ -13,6 +14,7 @@ namespace PruebaDotnet.src.user.entity
         [Column]
         [Required]
         [MaxLength(50)]
+        // [Index(IsUnique = true)] //Don´t work :(
         public string username { get; set; }
 
         [Column]
@@ -24,6 +26,8 @@ namespace PruebaDotnet.src.user.entity
         [DefaultValue(1)] //Don´t work :(
         public bool state { get; set; }
 
+
+        public virtual ICollection<TaskEntity> tasks { get; set; }
 
     }
 }

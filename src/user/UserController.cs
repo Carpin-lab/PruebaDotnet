@@ -2,25 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PruebaDotnet.src.interfaces;
+using PruebaDotnet.src.user.dto;
 using PruebaDotnet.src.user.entity;
 
 namespace PruebaDotnet.src.user
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : ControllerBase, IControllers<UserEntity>
+    public class UserController : ControllerBase, IControllers<UserDto>
     {
-        private readonly IServices<UserEntity> _userService;
+        private readonly IServices<UserDto> _userService;
 
-        public UserController(IServices<UserEntity> userService)
+        public UserController(IServices<UserDto> userService)
         {
             _userService = userService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] UserEntity entity)
+        public async Task<IActionResult> Add([FromBody] UserDto entity)
         {
             var newUser = await _userService.Add(entity);
             return newUser != null ? Ok(newUser) : BadRequest(); //FIXME: We need to return the object created
@@ -44,7 +47,7 @@ namespace PruebaDotnet.src.user
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UserEntity entity)
+        public async Task<IActionResult> Update(int id, [FromBody] UserDto entity)
         {
             var existingUser = await _userService.GetById(id);
             if (existingUser == null)

@@ -1,10 +1,10 @@
 using PruebaDotnet.src.interfaces;
-using PruebaDotnet.src.repository;
+using PruebaDotnet.src.user.dto;
 using PruebaDotnet.src.user.entity;
 
 namespace PruebaDotnet.src.user
 {
-    public class UserService : IServices<UserEntity>
+    public class UserService : IServices<UserDto>
     {
         private readonly IRepository<UserEntity> _UserRepository;
 
@@ -13,7 +13,7 @@ namespace PruebaDotnet.src.user
             _UserRepository = userRepository;
         }
 
-        public async Task<UserEntity> Add(UserEntity entity)
+        public async Task<UserDto> Add(UserDto entity)
         {
             var user = new UserEntity
             {
@@ -22,23 +22,55 @@ namespace PruebaDotnet.src.user
                 state = true
             };
             await _UserRepository.Add(user);
-            return user;
+            return new UserDto
+            {
+                id = user.id,
+                username = user.username,
+                password = user.password
+            };
         }
 
 
 
-        public Task<IEnumerable<UserEntity>> Get()
+        public async Task<IEnumerable<UserDto>> Get()
         {
-            return _UserRepository.Get();
+            var users = await _UserRepository.Get();
+            return users.Select(task => new UserDto
+            {
+                id = task.id,
+                username = task.username,
+                password = task.password
+            });
         }
-        public async Task<UserEntity> GetById(int id)
+        public async Task<UserDto> GetById(int id)
         {
-            return await _UserRepository.GetOne(id);
+            var user = await _UserRepository.GetOne(id);
+            if (user == null)
+            {
+                return null;
+            }
+            return new UserDto
+            {
+                id = user.id,
+                username = user.username,
+                password = user.password
+            };
         }
 
-        public async Task<UserEntity> Update(int id, UserEntity entity)
+        public async Task<UserDto> Update(int id, UserDto entity)
         {
-            return await _UserRepository.Update(id, entity);
+            var user_update = new UserEntity
+            {
+                username = entity.username,
+                password = entity.password
+            };
+            var result = await _UserRepository.Update(id, user_update);
+            return new UserDto
+            {
+                id = result.id,
+                username = result.username,
+                password = result.password
+            };
         }
 
         public async Task Delete(int id)

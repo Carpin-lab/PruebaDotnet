@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\carpi\\PruebaDotnet\\PruebaDotnet.csproj": {}
+    "C:\\Users\\carpi\\PruebaDotNet_React\\PruebaDotnet\\PruebaDotnet.csproj": {}
   },
   "projects": {
-    "C:\\Users\\carpi\\PruebaDotnet\\PruebaDotnet.csproj": {
+    "C:\\Users\\carpi\\PruebaDotNet_React\\PruebaDotnet\\PruebaDotnet.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\carpi\\PruebaDotnet\\PruebaDotnet.csproj",
+        "projectUniqueName": "C:\\Users\\carpi\\PruebaDotNet_React\\PruebaDotnet\\PruebaDotnet.csproj",
         "projectName": "PruebaDotnet",
-        "projectPath": "C:\\Users\\carpi\\PruebaDotnet\\PruebaDotnet.csproj",
+        "projectPath": "C:\\Users\\carpi\\PruebaDotNet_React\\PruebaDotnet\\PruebaDotnet.csproj",
         "packagesPath": "C:\\Users\\carpi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\carpi\\PruebaDotnet\\obj\\",
+        "outputPath": "C:\\Users\\carpi\\PruebaDotNet_React\\PruebaDotnet\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\carpi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -45,6 +45,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Jtechs.OpenApi.AspNetCore.Swashbuckle": {
+              "target": "Package",
+              "version": "[0.2.2, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.8, )"
@@ -62,6 +70,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.8, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
